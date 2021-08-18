@@ -1,7 +1,8 @@
 -- Skipper's Catalogue
+-- GitHub: https://github.com/Vildravn/APICO-Skippers-Catalogue
+--
 -- A mod for APICO that adds a catalogue to order items from
 -- Other mods can use this to get their custom items (e.g. custom workbenches) into an existing world without much hassle
--- GitHub: 
 -- Usage (user): Click Skipper's Boat to access the catalogue
 -- Usage (modder):
 --  1. Make sure your item has a shop_buy value defined. It can be 0 if you'd like, this is the cost of the item in the catalogue
