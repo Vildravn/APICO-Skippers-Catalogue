@@ -24,7 +24,7 @@ catalogue_text = "In this catalogue yah can find trinkets and bits I found in my
 function register()
     return {
         name = "skippers_catalogue",
-        hooks = {"click"}
+        hooks = {"click", "ready"}
     }
 end
 
@@ -138,10 +138,12 @@ function init()
         draw = "catalogue_draw"
     })
 
-    -- Spawn the catalogue
-    api_create_obj("skippers_catalogue_catalogue", -32, -32)
-
     return "Success"
+end
+
+function ready()
+    -- Spawn the catalogue once everything is ready
+    spawn_catalogue()
 end
 
 -- Click hook, checks if a left mouse button has been pressed on Skipper's Boat.
@@ -156,6 +158,21 @@ function click(button, click_type)
             if inst["oid"] == "scenery1" then
                 api_toggle_menu(catalogue_menu_id, true)
             end
+        end
+    end
+end
+
+function spawn_catalogue()
+    -- Find all instances of Skipper's Catalogue menu object
+    found = api_get_menu_objects(nil, "skippers_catalogue_catalogue")
+
+    -- If there's no instances found, spawn one
+    if #found == 0 then
+        api_create_obj("skippers_catalogue_catalogue", -32, -32)
+    -- If there's more than one instance, destroy the excess
+    elseif #found > 1 then
+        for i=2, #found do
+            api_destroy_inst(found[i]["id"])
         end
     end
 end
