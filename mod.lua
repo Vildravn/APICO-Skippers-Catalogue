@@ -18,8 +18,12 @@ catalogue_instance_id = nil
 -- Stores the instance ID of the catalogue menu
 catalogue_menu_id = nil
 
--- The text displayed in the catalogue menu UI
-catalogue_text = "In this catalogue yah can find trinkets and bits I found in my travels to far away lands! If anythin' catches yer fancy, yer welcome to it for a price, hoho!\n- Skipper\n\n\n\n\n\n\n\nSkipper's Catalogue works like any other shop, selecting an item purchases it for the listed price."
+-- Strings used in the mod
+cat_strings = {
+    catalogue = "In this catalogue yah can find trinkets and bits I found in my travels to far away lands! If anythin' catches yer fancy, yer welcome to it for a price, hoho!\n- Skipper\n\n\n\n\n\n\n\nSkipper's Catalogue works like any other shop, selecting an item purchases it for the listed price.",
+    notif_title = "Skipper's Catalogue",
+    notif_body = "Click me boat to shop!"
+}
 
 function register()
     return {
@@ -169,6 +173,7 @@ function spawn_catalogue()
     -- If there's no instances found, spawn one
     if #found == 0 then
         api_create_obj("skippers_catalogue_catalogue", -32, -32)
+        api_set_notification("notice", "skippers_catalogue_catalogue", cat_strings["notif_title"], cat_strings["notif_body"])
     -- If there's more than one instance, destroy the excess
     elseif #found > 1 then
         for i=2, #found do
@@ -201,7 +206,7 @@ function catalogue_draw(menu_id)
     tx = menu["x"] + 9 - cam["x"]
     ty = menu["y"] + 16 - cam["y"]
 
-    api_draw_text(tx, ty, catalogue_text, false, "FONT_BOOK", 145)
+    api_draw_text(tx, ty, cat_strings["catalogue"], false, "FONT_BOOK", 145)
 end
 
 -- Adds an item to the catalogue, returns "Success" if the item has been added, nil if not
